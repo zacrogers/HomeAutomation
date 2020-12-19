@@ -9,12 +9,14 @@ int inputVal  = 0;        //Variable to store analog input values
 
 int ldr_val = 0;
 float tempr_val = 0;
-int humid_val = 0;
+float humid_val = 0;
 
 const char* ssid = SSID;
 const char* password = PASSWORD;
 
 ESP8266WebServer server(80);
+
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() 
 {
@@ -97,6 +99,7 @@ void handleSensorPage()
 {
 	//ldr_val = analogRead (ANALOG_PIN); 
 	readSensors();
+	humid_val = dht.readHumidity();
 
 	String page = "<HTML><HEAD><TITLE>Sensor Node</TITLE></HEAD>";
 
@@ -108,7 +111,7 @@ void handleSensorPage()
 	page += "</td><td>";
 	page += tempr_val;
 	page += "</td><td>";
-	page += tempr_val;
+	page += humid_val;
 	page += "</td></table>";
 	page += "</CENTER></BODY></HTML>";
 

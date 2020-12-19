@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-
+import csv
+from datetime import datetime
 
 def get_sensor_data(ip_addr):
     try:
@@ -18,5 +19,15 @@ def get_sensor_data(ip_addr):
     except requests.exceptions.RequestException as e:
         print(e)
 
+sensor_vals = get_sensor_data("http://192.168.1.92/sensors")
+vals_list = list(sensor_vals.values())
 
-print(get_sensor_data("http://192.168.1.92/sensors"))
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
+
+vals_list.append(current_time)
+
+with open('sensor_vals.csv', 'a') as f:
+    writer = csv.writer(f)
+    writer.writerow(vals_list)
+    # f.write(list(sensor_vals.values()))
