@@ -38,19 +38,50 @@ class PowerNode:
     def __init__(self, name, ip_addr):
         self.name = name
         self.ip_addr = ip_addr
+        self.relay_states = list([0, 0, 0, 0])
 
     # Get current on/off state of outlets
     def get_state(self):
-        pass
+        try:
+            data = requests.get(f"{self.ip_addr}/relay_states")
 
-    def turn_on(self, ):
-        pass
+            if(data.status_code == 200):
+                soup = BeautifulSoup(data.text, 'html.parser')
+                table = soup.find("table", class_="relay_states")
+                headers = [header.text for header in table.findAll("th")]
+                values = [{headers[i]: cell.text for i, cell in enumerate(row.find_all('td'))}
+                            for row in table.find_all('tr')]
 
-    def turn_off(self):
-        pass
+                self.relay_states = list(values[1].values()) #  First row in list is empty so only return second
+
+        except requests.exceptions.RequestException as e:
+            print(e)
+            return False
+
+    def turn_on(self, relay_num):
+        try:
+            data = requests.get(f"{self.ip_addr}/relay_{relay_num}_on")
+
+            if(data.status_code == 200):
+                get_state()
+
+        except requests.exceptions.RequestException as e:
+            print(e)
+
+    def turn_off(self, relay_num):
+        try:
+            data = requests.get(f"{self.ip_addr}/relay_{relay_num}_off")
+            
+            if(data.status_code == 200):
+                get_state()
+
+        except requests.exceptions.RequestException as e:
+            print(e)
 
     def all_on(self):
-        pass
+        for i in range(4):
+            turn_on(i)
 
     def all_off(self):
-        pass
+        for i in range(4):
+            turn_off(i)
