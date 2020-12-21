@@ -66,7 +66,7 @@ void loop()
 
 void handleRoot() 
 {
-	server.send(200, "text/plain", "hello from esp8266!");
+	server.send(200, "text/plain", "Power Node");
 }
 
 void handleRelayStates()
@@ -84,7 +84,7 @@ void handleRelayStates()
 	page += (relay_states & 0x01 << 2);
 	page += "</td><td>";
 	page += (relay_states & 0x01 << 3);
-	page += "</td></table>";
+	page += "</td></tr></table>";
 	page += "</CENTER></BODY></HTML>";
 
 	server.send(200, "text/html", page);
@@ -102,11 +102,12 @@ void handleRelay4Off(){relayOff(4);}
 
 void relayOn(uint8_t relay_num)
 {	
-	if(!(relay_states & (0x01 << relay_num)))
-	{
+	// if(!(relay_states & (0x01 << relay_num)))
+	// {
 		relay_states &= ~(0x01 << relay_num);
+		relay_states = relay_num;
 		digitalWrite(RELAY_PIN[relay_num], HIGH);
-	}
+	// }
 
 	String message = "Relay ";
 	message += relay_num;

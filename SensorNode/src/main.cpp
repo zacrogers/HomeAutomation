@@ -65,12 +65,8 @@ void setup()
 
 void loop()
 {
-	// inputVal = analogRead (ANALOG_PIN); // Analog Values 0 to 1023
-	// Serial.println (inputVal);
-	// analogWrite(LED, inputVal/4);      // Mapping 0 to 255
-	// delay(1000);
-	  server.handleClient();
-  	  MDNS.update();
+	server.handleClient();
+	MDNS.update();
 }
 
 void readSensors()
@@ -91,13 +87,12 @@ void readSensors()
 void handleRoot() 
 {
 	digitalWrite(LED, 1);
-	server.send(200, "text/plain", "hello from esp8266!");
+	server.send(200, "text/plain", "Sensor Node");
 	digitalWrite(LED, 0);
 }
 
 void handleSensorPage()
 {
-	//ldr_val = analogRead (ANALOG_PIN); 
 	readSensors();
 	humid_val = dht.readHumidity();
 
@@ -112,7 +107,7 @@ void handleSensorPage()
 	page += tempr_val;
 	page += "</td><td>";
 	page += humid_val;
-	page += "</td></table>";
+	page += "</td></tr></table>";
 	page += "</CENTER></BODY></HTML>";
 
 	server.send(200, "text/html", page);
