@@ -2,32 +2,55 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 from datetime import datetime
+from collections import namedtuple
 
-def get_sensor_data(ip_addr):
-    try:
-        data = requests.get(ip_addr)
+NodeData = namedtuple("NodeData", "light temperature humidity")
 
-        if(data.status_code == 200):
-            soup = BeautifulSoup(data.text, 'html.parser')
-            table = soup.find("table", class_="sensor_values")
-            headers = [header.text for header in table.findAll("th")]
-            values = [{headers[i]: cell.text for i, cell in enumerate(row.find_all('td'))}
-                        for row in table.find_all('tr')]
+class SensorNode:
+    def __init__(self, name, ip_addr, trig_time=None, trig_level=None):
+        self.name = name
+        self.ip_addr = ip_addr
+        self.trig_time = trig_time
+        self.trig_level = trig_level
+        self.data = NodeData("1", "2", "3")
+        self.power_node = None
 
-            return values[1] # First row in list is empty so only return second
+    def get_data(self):
+        try:
+            data = requests.get(self.ip_addr)
 
-    except requests.exceptions.RequestException as e:
-        print(e)
+            if(data.status_code == 200):
+                soup = BeautifulSoup(data.text, 'html.parser')
+                table = soup.find("table", class_="sensor_values")
+                headers = [header.text for header in table.findAll("th")]
+                values = [{headers[i]: cell.text for i, cell in enumerate(row.find_all('td'))}
+                            for row in table.find_all('tr')]
 
-sensor_vals = get_sensor_data("http://192.168.1.92/sensors")
-vals_list = list(sensor_vals.values())
+                vals = list(values[1].values()) #  First row in list is empty so only return second
+                self.data = NodeData(vals[0], vals[1], vals[2])
 
-now = datetime.now()
-current_time = now.strftime("%H:%M:%S")
+        except requests.exceptions.RequestException as e:
+            print(e)
+            return False
 
-vals_list.append(current_time)
 
-with open('sensor_vals.csv', 'a') as f:
-    writer = csv.writer(f)
-    writer.writerow(vals_list)
-    # f.write(list(sensor_vals.values()))
+class PowerNode:
+    def __init__(self, name, ip_addr):
+        self.name = name
+        self.ip_addr = ip_addr
+
+    # Get current on/off state of outlets
+    def get_state(self):
+        pass
+
+    def turn_on(self, ):
+        pass
+
+    def turn_off(self):
+        pass
+
+    def all_on(self):
+        pass
+
+    def all_off(self):
+        pass
