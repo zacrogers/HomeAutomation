@@ -95,7 +95,7 @@ L Connector:Conn_01x04_Male J2
 U 1 1 5FE0F4A0
 P 7750 5750
 F 0 "J2" H 7858 6031 50  0000 C CNN
-F 1 "ProgrammingHeader" H 7858 5940 50  0000 C CNN
+F 1 "FTDI" H 7858 5940 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 7750 5750 50  0001 C CNN
 F 3 "~" H 7750 5750 50  0001 C CNN
 	1    7750 5750
@@ -106,7 +106,7 @@ L Connector:Conn_01x03_Female J4
 U 1 1 5FE12152
 P 9100 5850
 F 0 "J4" H 9000 5500 50  0000 L CNN
-F 1 "ProgrammingJumper" H 8350 5600 50  0000 L CNN
+F 1 "ProgJump" H 8350 5600 50  0000 L CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 9100 5850 50  0001 C CNN
 F 3 "~" H 9100 5850 50  0001 C CNN
 	1    9100 5850
@@ -126,7 +126,7 @@ U 1 1 5FE1B074
 P 2100 2150
 F 0 "SW1" H 2100 2435 50  0000 C CNN
 F 1 "ResetButton" H 2100 2344 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_PUSH_6mm_H8mm" H 2100 2350 50  0001 C CNN
+F 2 "Button_Switch_THT:SW_PUSH_6mm_H8.5mm" H 2100 2350 50  0001 C CNN
 F 3 "~" H 2100 2350 50  0001 C CNN
 	1    2100 2150
 	1    0    0    -1  
@@ -484,7 +484,7 @@ F 3 "" H 9600 2800 50  0001 C CNN
 	1    9600 2800
 	1    0    0    -1  
 $EndComp
-Text GLabel 9900 2500 2    50   Input ~ 0
+Text GLabel 10250 2500 2    50   Input ~ 0
 DHTOut
 Text GLabel 6100 2550 2    50   Input ~ 0
 DHTOut
@@ -768,7 +768,7 @@ L Connector:Conn_01x03_Female J5
 U 1 1 60024887
 P 9300 4850
 F 0 "J5" H 9192 4525 50  0000 C CNN
-F 1 "PowerHeader" H 9192 4616 50  0000 C CNN
+F 1 "PWR" H 9192 4616 50  0000 C CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 9300 4850 50  0001 C CNN
 F 3 "~" H 9300 4850 50  0001 C CNN
 	1    9300 4850
@@ -785,8 +785,8 @@ L Connector:Conn_01x02_Female J6
 U 1 1 60032BEF
 P 9250 4250
 F 0 "J6" H 9142 3925 50  0000 C CNN
-F 1 "Conn_01x02_Female" H 9142 4016 50  0000 C CNN
-F 2 "" H 9250 4250 50  0001 C CNN
+F 1 "MuxExtra" H 9142 4016 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9250 4250 50  0001 C CNN
 F 3 "~" H 9250 4250 50  0001 C CNN
 	1    9250 4250
 	-1   0    0    1   
@@ -795,4 +795,23 @@ Text GLabel 9450 4150 2    50   Input ~ 0
 SensorC
 Text GLabel 9450 4250 2    50   Input ~ 0
 SensorD
+$Comp
+L Device:R R9
+U 1 1 60075C43
+P 10050 2350
+F 0 "R9" H 10120 2396 50  0000 L CNN
+F 1 "10k" H 10120 2305 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 9980 2350 50  0001 C CNN
+F 3 "~" H 10050 2350 50  0001 C CNN
+	1    10050 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10250 2500 10050 2500
+Connection ~ 10050 2500
+Wire Wire Line
+	10050 2500 9900 2500
+Wire Wire Line
+	10050 2200 9600 2200
+Connection ~ 9600 2200
 $EndSCHEMATC
