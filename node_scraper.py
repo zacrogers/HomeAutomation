@@ -32,6 +32,10 @@ class SensorNode:
         except requests.exceptions.RequestException as e:
             print(e)
             return False
+    
+    def update_power_node(self):
+        if self.power_node is None:
+            return
 
 
 class PowerNode:
@@ -71,7 +75,7 @@ class PowerNode:
     def turn_off(self, relay_num):
         try:
             data = requests.get(f"{self.ip_addr}/relay_{relay_num}_off")
-            
+
             if(data.status_code == 200):
                 get_state()
 
