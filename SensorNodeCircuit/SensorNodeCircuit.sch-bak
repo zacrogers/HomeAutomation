@@ -93,32 +93,32 @@ $EndComp
 $Comp
 L Connector:Conn_01x04_Male J?
 U 1 1 5FE0F4A0
-P 8950 5700
-F 0 "J?" H 9058 5981 50  0000 C CNN
-F 1 "ProgrammingHeader" H 9058 5890 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 8950 5700 50  0001 C CNN
-F 3 "~" H 8950 5700 50  0001 C CNN
-	1    8950 5700
+P 7750 5750
+F 0 "J?" H 7858 6031 50  0000 C CNN
+F 1 "ProgrammingHeader" H 7858 5940 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 7750 5750 50  0001 C CNN
+F 3 "~" H 7750 5750 50  0001 C CNN
+	1    7750 5750
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x03_Female J?
 U 1 1 5FE12152
-P 8950 5050
-F 0 "J?" H 8978 5076 50  0000 L CNN
-F 1 "ProgrammingJumper" H 8978 4985 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 8950 5050 50  0001 C CNN
-F 3 "~" H 8950 5050 50  0001 C CNN
-	1    8950 5050
+P 9100 5850
+F 0 "J?" H 9000 5500 50  0000 L CNN
+F 1 "ProgrammingJumper" H 8350 5600 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 9100 5850 50  0001 C CNN
+F 3 "~" H 9100 5850 50  0001 C CNN
+	1    9100 5850
 	-1   0    0    1   
 $EndComp
-Text GLabel 9250 5900 2    50   Input ~ 0
+Text GLabel 7950 5950 2    50   Input ~ 0
 +3.3V
-Text GLabel 9250 5800 2    50   Input ~ 0
+Text GLabel 7950 5850 2    50   Input ~ 0
 GND
-Text GLabel 9250 5700 2    50   Input ~ 0
+Text GLabel 7950 5750 2    50   Input ~ 0
 TX
-Text GLabel 9250 5600 2    50   Input ~ 0
+Text GLabel 7950 5650 2    50   Input ~ 0
 RX
 $Comp
 L Switch:SW_Push_Dual SW?
@@ -131,26 +131,14 @@ F 3 "~" H 2100 2350 50  0001 C CNN
 	1    2100 2150
 	1    0    0    -1  
 $EndComp
-Text GLabel 10050 5150 2    50   Input ~ 0
+Text GLabel 10000 5950 2    50   Input ~ 0
 +3.3V
-Text GLabel 9250 4950 2    50   Input ~ 0
+Text GLabel 9300 5750 2    50   Input ~ 0
 GND
-Text GLabel 9250 5050 2    50   Input ~ 0
+Text GLabel 9300 5850 2    50   Input ~ 0
 GPIO_0
 Wire Wire Line
-	10050 5150 9950 5150
-Wire Wire Line
-	9150 5050 9250 5050
-Wire Wire Line
-	9250 4950 9150 4950
-Wire Wire Line
-	9250 5600 9150 5600
-Wire Wire Line
-	9150 5700 9250 5700
-Wire Wire Line
-	9150 5800 9250 5800
-Wire Wire Line
-	9150 5900 9250 5900
+	10000 5950 9900 5950
 Text GLabel 4800 5150 0    50   Input ~ 0
 ADC
 Wire Wire Line
@@ -663,16 +651,14 @@ Wire Wire Line
 $Comp
 L Device:R R?
 U 1 1 5FF52984
-P 9800 5150
-F 0 "R?" V 9593 5150 50  0000 C CNN
-F 1 "10k" V 9684 5150 50  0000 C CNN
-F 2 "Resistor_SMD:R_1206_3216Metric" V 9730 5150 50  0001 C CNN
-F 3 "~" H 9800 5150 50  0001 C CNN
-	1    9800 5150
+P 9750 5950
+F 0 "R?" V 9543 5950 50  0000 C CNN
+F 1 "10k" V 9634 5950 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric" V 9680 5950 50  0001 C CNN
+F 3 "~" H 9750 5950 50  0001 C CNN
+	1    9750 5950
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	9650 5150 9150 5150
 $Comp
 L power:GND #PWR?
 U 1 1 5FF5F838
@@ -719,29 +705,29 @@ $EndComp
 $Comp
 L Connector:Conn_01x08_Male J?
 U 1 1 5FF8B1D3
-P 8950 4150
-F 0 "J?" H 9058 4631 50  0000 C CNN
-F 1 "Conn_01x08_Male" H 9058 4540 50  0000 C CNN
-F 2 "" H 8950 4150 50  0001 C CNN
-F 3 "~" H 8950 4150 50  0001 C CNN
-	1    8950 4150
+P 7900 4400
+F 0 "J?" H 8008 4881 50  0000 C CNN
+F 1 "ExtraPins" H 8008 4790 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 7900 4400 50  0001 C CNN
+F 3 "~" H 7900 4400 50  0001 C CNN
+	1    7900 4400
 	1    0    0    -1  
 $EndComp
-Text GLabel 9150 3850 2    50   Input ~ 0
+Text GLabel 8100 4100 2    50   Input ~ 0
 SDA
-Text GLabel 9150 3950 2    50   Input ~ 0
+Text GLabel 8100 4200 2    50   Input ~ 0
 SCL
-Text GLabel 9150 4050 2    50   Input ~ 0
+Text GLabel 8100 4300 2    50   Input ~ 0
 CSO
-Text GLabel 9150 4150 2    50   Input ~ 0
+Text GLabel 8100 4400 2    50   Input ~ 0
 MISO
-Text GLabel 9150 4250 2    50   Input ~ 0
+Text GLabel 8100 4500 2    50   Input ~ 0
 GPIO9
-Text GLabel 9150 4350 2    50   Input ~ 0
+Text GLabel 8100 4600 2    50   Input ~ 0
 GPIO10
-Text GLabel 9150 4450 2    50   Input ~ 0
+Text GLabel 8100 4700 2    50   Input ~ 0
 MOSI
-Text GLabel 9150 4550 2    50   Input ~ 0
+Text GLabel 8100 4800 2    50   Input ~ 0
 SCLK
 Text GLabel 6100 2350 2    50   Input ~ 0
 SDA
@@ -775,4 +761,38 @@ Wire Wire Line
 	4700 2650 4800 2650
 Wire Wire Line
 	4800 2550 4700 2550
+Wire Wire Line
+	9600 5950 9300 5950
+$Comp
+L Connector:Conn_01x03_Female J?
+U 1 1 60024887
+P 9300 4850
+F 0 "J?" H 9192 4525 50  0000 C CNN
+F 1 "PowerHeader" H 9192 4616 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 9300 4850 50  0001 C CNN
+F 3 "~" H 9300 4850 50  0001 C CNN
+	1    9300 4850
+	-1   0    0    1   
+$EndComp
+Text GLabel 9500 4750 2    50   Input ~ 0
++5V
+Text GLabel 9500 4850 2    50   Input ~ 0
++3.3V
+Text GLabel 9500 4950 2    50   Input ~ 0
+GND
+$Comp
+L Connector:Conn_01x02_Female J?
+U 1 1 60032BEF
+P 9500 4200
+F 0 "J?" H 9392 3875 50  0000 C CNN
+F 1 "Conn_01x02_Female" H 9392 3966 50  0000 C CNN
+F 2 "" H 9500 4200 50  0001 C CNN
+F 3 "~" H 9500 4200 50  0001 C CNN
+	1    9500 4200
+	-1   0    0    1   
+$EndComp
+Text GLabel 9700 4100 2    50   Input ~ 0
+SensorC
+Text GLabel 9700 4200 2    50   Input ~ 0
+SensorD
 $EndSCHEMATC
