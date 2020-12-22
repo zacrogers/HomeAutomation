@@ -57,7 +57,6 @@ class PowerNode:
                             for row in table.find_all('tr')]
 
                 self.relay_states = list(values[1].values()) #  First row in list is empty so only return second
-                print(self.relay_states)
 
         except requests.exceptions.RequestException as e:
             print(e)
@@ -68,7 +67,7 @@ class PowerNode:
             data = requests.get(f"{self.ip_addr}/relay_{relay_num}_on")
 
             if(data.status_code == 200):
-                get_state()
+                self.get_state()
 
         except requests.exceptions.RequestException as e:
             print(e)
@@ -78,15 +77,15 @@ class PowerNode:
             data = requests.get(f"{self.ip_addr}/relay_{relay_num}_off")
 
             if(data.status_code == 200):
-                get_state()
+                self.get_state()
 
         except requests.exceptions.RequestException as e:
             print(e)
 
     def all_on(self):
         for i in range(4):
-            turn_on(i)
+            self.turn_on(i+1)
 
     def all_off(self):
         for i in range(4):
-            turn_off(i)
+            self.turn_off(i+1)
