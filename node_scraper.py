@@ -57,6 +57,7 @@ class PowerNode:
                             for row in table.find_all('tr')]
 
                 self.relay_states = list(values[1].values()) #  First row in list is empty so only return second
+                print(self.relay_states)
 
         except requests.exceptions.RequestException as e:
             print(e)

@@ -6,7 +6,7 @@ const char* ssid = SSID;
 const char* password = PASSWORD;
 
 ESP8266WebServer server(80);
-uint8_t relay_states = 0x00;
+uint8_t states[NUM_RELAYS] = {0,0,0,0}; 
 
 void setup() 
 {
@@ -77,37 +77,36 @@ void handleRelayStates()
 	page += "<table class=\"relay_states\">";
 	page += "<tr><th>Relay 1</th><th>Relay 2</th><th>Relay 3</th><th>Relay 4</th></tr>";
 	page += "<tr><td>";
-	page += (relay_states & 0x01);
+	page += states[0];
 	page += "</td><td>";
-	page += (relay_states & 0x01 << 1);
+	page += states[1];
 	page += "</td><td>";
-	page += (relay_states & 0x01 << 2);
+	page += states[2];
 	page += "</td><td>";
-	page += (relay_states & 0x01 << 3);
+	page += states[3];
 	page += "</td></tr></table>";
 	page += "</CENTER></BODY></HTML>";
 
 	server.send(200, "text/html", page);
 }
 
-void handleRelay1On(){relayOn(1);}
-void handleRelay2On(){relayOn(2);}
-void handleRelay3On(){relayOn(3);}
-void handleRelay4On(){relayOn(4);}
+void handleRelay1On(){relayOn(0);}
+void handleRelay2On(){relayOn(1);}
+void handleRelay3On(){relayOn(2);}
+void handleRelay4On(){relayOn(3);}
 
-void handleRelay1Off(){relayOff(1);}
-void handleRelay2Off(){relayOff(2);}
-void handleRelay3Off(){relayOff(3);}
-void handleRelay4Off(){relayOff(4);}
+void handleRelay1Off(){relayOff(0);}
+void handleRelay2Off(){relayOff(1);}
+void handleRelay3Off(){relayOff(2);}
+void handleRelay4Off(){relayOff(3);}
 
 void relayOn(uint8_t relay_num)
 {	
-	// if(!(relay_states & (0x01 << relay_num)))
-	// {
-		relay_states &= ~(0x01 << relay_num);
-		relay_states = relay_num;
+	if(!(states[relay_num]))
+	{
+		states[relay_num] = 1;
 		digitalWrite(RELAY_PIN[relay_num], HIGH);
-	// }
+	}
 
 	String message = "Relay ";
 	message += relay_num;
@@ -117,9 +116,9 @@ void relayOn(uint8_t relay_num)
 
 void relayOff(uint8_t relay_num)
 {	
-	if(relay_states & (0x01 << relay_num))
+	if(states[relay_num])
 	{
-		relay_states |= (0x01 << relay_num);
+		states[relay_num] = 0;
 		digitalWrite(RELAY_PIN[relay_num], LOW);
 	}
 
