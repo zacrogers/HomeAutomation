@@ -5,6 +5,7 @@ Node scraper python file contains classes for interacting with the nodes.
 
 ### Sensor Node
 [Sensor Node Project Folder](SensorNode)
+
 Gathers data from sensors and displays it via a web server.
 
 Sensors
