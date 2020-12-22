@@ -1,12 +1,12 @@
 #include "main.h"
 
-const uint8_t RELAY_PIN[NUM_RELAYS] = {};
+const uint8_t RELAY_PIN[NUM_RELAYS] = {D1, D2, D0, D5};
 
 const char* ssid = SSID;
 const char* password = PASSWORD;
 
 ESP8266WebServer server(80);
-uint8_t states[NUM_RELAYS] = {0,0,0,0}; 
+uint8_t states[NUM_RELAYS] = {0, 0, 0, 0}; 
 
 void setup() 
 {
