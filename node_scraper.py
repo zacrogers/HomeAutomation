@@ -7,6 +7,7 @@ from collections import namedtuple
 NodeData = namedtuple("NodeData", "light temperature humidity")
 
 class SensorNode:
+    ''' Class for interacting with web server hosted on ESP12 based sensor board. '''
     def __init__(self, name, ip_addr, trig_time=None, trig_level=None):
         self.name = name
         self.ip_addr = ip_addr
@@ -16,6 +17,7 @@ class SensorNode:
         self.power_node = None
 
     def get_data(self):
+        ''' Fetches light, temperature and humidity data from web server'''
         try:
             data = requests.get(self.ip_addr)
 
@@ -39,10 +41,13 @@ class SensorNode:
 
 
 class PowerNode:
+    ''' Class for interacting with web server hosted on ESP12 based relay controlling board. '''
+    self._NUM_CHANNELS = 4
     def __init__(self, name, ip_addr):
         self.name = name
         self.ip_addr = ip_addr
         self.relay_states = list([0, 0, 0, 0])
+        self.channel_labels = list(["1", "2", "3", "4"])
 
     def get_state(self):
         ''' Get current state of all power outlets in node. '''
@@ -93,4 +98,12 @@ class PowerNode:
         ''' Turn all outlets off. Leaves them off if they already are. '''
         for i in range(4):
             self.turn_off(i+1)
+
+    def set_channel_label(self, num:int, label:str):
+        ''' Set display label for node channels. '''
+        if(num < self._NUM_CHANNELS-1):
+            return
+
+        self.channel_labels[num] = label
+        
 
