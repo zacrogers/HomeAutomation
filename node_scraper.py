@@ -44,8 +44,8 @@ class PowerNode:
         self.ip_addr = ip_addr
         self.relay_states = list([0, 0, 0, 0])
 
-    # Get current on/off state of outlets
     def get_state(self):
+        ''' Get current state of all power outlets in node. '''
         try:
             data = requests.get(f"{self.ip_addr}/relay_states")
 
@@ -63,6 +63,7 @@ class PowerNode:
             return False
 
     def turn_on(self, relay_num):
+        ''' Turn on single outlet. '''
         try:
             data = requests.get(f"{self.ip_addr}/relay_{relay_num}_on")
 
@@ -73,6 +74,7 @@ class PowerNode:
             print(e)
 
     def turn_off(self, relay_num):
+        ''' Turn off single outlet. '''
         try:
             data = requests.get(f"{self.ip_addr}/relay_{relay_num}_off")
 
@@ -83,9 +85,12 @@ class PowerNode:
             print(e)
 
     def all_on(self):
+        ''' Turn all outlets on. Leaves them on if they already are. '''
         for i in range(4):
             self.turn_on(i+1)
 
     def all_off(self):
+        ''' Turn all outlets off. Leaves them off if they already are. '''
         for i in range(4):
             self.turn_off(i+1)
+
