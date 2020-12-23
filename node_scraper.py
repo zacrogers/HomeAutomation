@@ -42,8 +42,8 @@ class SensorNode:
 
 class PowerNode:
     ''' Class for interacting with web server hosted on ESP12 based relay controlling board. '''
-    self._NUM_CHANNELS = 4
     def __init__(self, name, ip_addr):
+        self._NUM_CHANNELS = 4
         self.name = name
         self.ip_addr = ip_addr
         self.relay_states = list([0, 0, 0, 0])
