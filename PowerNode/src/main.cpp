@@ -13,7 +13,7 @@ void setup()
 	for(uint8_t i = 0; i < NUM_RELAYS; ++i)
 	{
 		pinMode(RELAY_PIN[i], OUTPUT);
-		digitalWrite(RELAY_PIN[i], LOW);
+		digitalWrite(RELAY_PIN[i], HIGH);
 	}
 
   	Serial.begin(115200);
@@ -105,7 +105,7 @@ void relayOn(uint8_t relay_num)
 	if(!(states[relay_num]))
 	{
 		states[relay_num] = 1;
-		digitalWrite(RELAY_PIN[relay_num], HIGH);
+		digitalWrite(RELAY_PIN[relay_num], LOW);
 	}
 
 	String message = "Relay ";
@@ -119,7 +119,7 @@ void relayOff(uint8_t relay_num)
 	if(states[relay_num])
 	{
 		states[relay_num] = 0;
-		digitalWrite(RELAY_PIN[relay_num], LOW);
+		digitalWrite(RELAY_PIN[relay_num], HIGH);
 	}
 
 	String message = "Relay ";
