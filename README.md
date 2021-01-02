@@ -18,3 +18,7 @@ Sensors
 
 Uses relays to control power outlets. Hosts a web server that can be used to turn the outlets on and off.
 
+### Android app
+[App repository](https://github.com/zacrogers/HomeAutoApp)
+
+Work in progress. Displays data from the sensor nodes and has buttons for controlling the power nodes.
