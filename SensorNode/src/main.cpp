@@ -1,8 +1,8 @@
 #include "main.h"
 
 const uint8_t ANALOG_PIN = A0;
-const uint8_t MUX_A = D0;
-const uint8_t MUX_B = D5;
+const uint8_t MUX_A = D5;
+const uint8_t MUX_B = D7;
 
 const int LED = 1;        //Naming LED Pin
 int inputVal  = 0;        //Variable to store analog input values
@@ -72,12 +72,12 @@ void loop()
 void readSensors()
 {
 	int analog_read = 0;
-	digitalWrite(MUX_A, 0);
+	digitalWrite(MUX_A, 1);
 	digitalWrite(MUX_B, 0);
 	ldr_val = analogRead(ANALOG_PIN); 
 	delay(100);
 
-	digitalWrite(MUX_A, 1);
+	digitalWrite(MUX_A, 0);
 	digitalWrite(MUX_B, 0);
 	analog_read = analogRead(ANALOG_PIN); 
 	float mv = (analog_read/1024.0) * 3300;
