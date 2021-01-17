@@ -80,8 +80,10 @@ void readSensors()
 	digitalWrite(MUX_A, 0);
 	digitalWrite(MUX_B, 0);
 	analog_read = analogRead(ANALOG_PIN); 
-	float mv = (analog_read/1024.0) * 3300;
-	tempr_val = mv / 10;
+	tempr_val = (analog_read * 1.0 / 1024) * 100;
+
+	// float mv = (analog_read/1024.0) * 3300;
+	// tempr_val = mv / 10;
 }
 
 void handleRoot() 
