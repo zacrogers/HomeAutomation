@@ -16,10 +16,11 @@ const char* password = PASSWORD;
 
 ESP8266WebServer server(80);
 
-DHT dht(DHTPIN, DHTTYPE);
+DHTesp dht;
 
 void setup() 
 {
+	dht.setup(D6, DHTesp::DHT11);
 	pinMode(MUX_A, OUTPUT);
 	pinMode(MUX_B, OUTPUT);
 	digitalWrite(MUX_A, 0);
@@ -80,10 +81,12 @@ void readSensors()
 	digitalWrite(MUX_A, 0);
 	digitalWrite(MUX_B, 0);
 	analog_read = analogRead(ANALOG_PIN); 
-	tempr_val = (analog_read * 1.0 / 1024) * 100;
+	tempr_val = (analog_read * 3.0 / 1024) * 100;
 
-	// float mv = (analog_read/1024.0) * 3300;
-	// tempr_val = mv / 10;
+	delay(100);
+
+	humid_val = dht.getHumidity();
+	delay(2000);
 }
 
 void handleRoot() 
@@ -96,7 +99,6 @@ void handleRoot()
 void handleSensorPage()
 {
 	readSensors();
-	humid_val = dht.readHumidity();
 
 	String page = "<HTML><HEAD><TITLE>Sensor Node</TITLE></HEAD>";
 
