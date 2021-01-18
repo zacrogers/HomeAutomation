@@ -4,19 +4,16 @@ const uint8_t ANALOG_PIN = A0;
 const uint8_t MUX_A = D5;
 const uint8_t MUX_B = D7;
 
-const int LED = 1;        //Naming LED Pin
-int inputVal  = 0;        //Variable to store analog input values
-
-int ldr_val = 0;
-float tempr_val = 0;
-float humid_val = 0;
-
-const char* ssid = SSID;
-const char* password = PASSWORD;
-
-ESP8266WebServer server(80);
+int light = 0;
+float temperature = 0;
+float humidity = 0;
 
 DHTesp dht;
+
+ESP8266WebServer server(80);
+WiFiManager wm;
+DHTesp dht;
+
 
 void setup() 
 {
@@ -25,25 +22,22 @@ void setup()
 	pinMode(MUX_B, OUTPUT);
 	digitalWrite(MUX_A, 0);
 	digitalWrite(MUX_B, 0);
-	pinMode(LED, OUTPUT);
-	digitalWrite(LED, 0);
+
 	Serial.begin(115200);
+
+	wm.setConfigPortalBlocking(false);
+	// wm.resetSettings();	
+
 	WiFi.mode(WIFI_STA);
-	WiFi.begin(ssid, password);
-	Serial.println("");
 
-	// Wait for connection
-	while (WiFi.status() != WL_CONNECTED) 
+    if(wm.autoConnect("SensorNodeAp"))
 	{
-		delay(500);
-		Serial.print(".");
-	}
-
-	Serial.println("");
-	Serial.print("Connected to ");
-	Serial.println(ssid);
-	Serial.print("IP address: ");
-	Serial.println(WiFi.localIP());
+		Serial.println("Connected to wifi");
+    }
+    else 
+	{
+        Serial.println("Configportal running");
+    }
 
 	if (MDNS.begin("esp8266")) 
 	{
@@ -51,23 +45,21 @@ void setup()
 	}
 
 	server.on("/", handleRoot);
-
-	server.on("/inline", []() {
-	server.send(200, "text/plain", "this works as well");
-	});
-
 	server.on("/sensors", handleSensorPage);
-
 	server.onNotFound(handleNotFound);
-
 	server.begin();
 	Serial.println("HTTP server started");
 }     
 
 void loop()
 {
-	server.handleClient();
-	MDNS.update();
+	wm.process();
+
+	if (WiFi.status() == WL_CONNECTED) 
+	{
+		server.handleClient();
+		MDNS.update();
+	}
 }
 
 void readSensors()
@@ -75,25 +67,22 @@ void readSensors()
 	int analog_read = 0;
 	digitalWrite(MUX_A, 1);
 	digitalWrite(MUX_B, 0);
-	ldr_val = analogRead(ANALOG_PIN); 
+	light = analogRead(ANALOG_PIN); 
 	delay(100);
 
 	digitalWrite(MUX_A, 0);
 	digitalWrite(MUX_B, 0);
 	analog_read = analogRead(ANALOG_PIN); 
-	tempr_val = (analog_read * 3.0 / 1024) * 100;
-
+	temperature = (analog_read * 1.0 / 1024) * 100;
 	delay(100);
 
-	humid_val = dht.getHumidity();
+	humidity = dht.getHumidity();
 	delay(2000);
 }
 
 void handleRoot() 
 {
-	digitalWrite(LED, 1);
 	server.send(200, "text/plain", "Sensor Node");
-	digitalWrite(LED, 0);
 }
 
 void handleSensorPage()
@@ -106,11 +95,11 @@ void handleSensorPage()
 	page += "<table class=\"sensor_values\">";
 	page += "<tr><th>Light</th><th>Temperature</th><th>Humidity</th></tr>";
 	page += "<tr><td>";
-	page += ldr_val;
+	page += light;
 	page += "</td><td>";
-	page += tempr_val;
+	page += temperature;
 	page += "</td><td>";
-	page += humid_val;
+	page += humidity;
 	page += "</td></tr></table>";
 	page += "</CENTER></BODY></HTML>";
 
@@ -119,7 +108,6 @@ void handleSensorPage()
 
 void handleNotFound() 
 {
-	digitalWrite(LED, 1);
 	String message = "File Not Found\n\n";
 	message += "URI: ";
 	message += server.uri();
@@ -135,5 +123,4 @@ void handleNotFound()
 	}
 
 	server.send(404, "text/plain", message);
-	digitalWrite(LED, 0);
 }
