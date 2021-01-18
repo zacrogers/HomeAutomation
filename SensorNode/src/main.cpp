@@ -12,6 +12,8 @@ DHTesp dht;
 
 ESP8266WebServer server(80);
 WiFiManager wm;
+DHTesp dht;
+
 
 void setup() 
 {
