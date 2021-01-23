@@ -8,8 +8,6 @@ int light = 0;
 float temperature = 0;
 float humidity = 0;
 
-DHTesp dht;
-
 ESP8266WebServer server(80);
 WiFiManager wm;
 DHTesp dht;
