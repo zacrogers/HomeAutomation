@@ -52,6 +52,8 @@ void setup()
 	server.on("/relay_3_off", handleRelay3Off);
 	server.on("/relay_4_off", handleRelay4Off);
 
+	server.on("/buttons", handleButtonPage);
+
 	server.onNotFound(handleNotFound);
 
 	server.begin();
