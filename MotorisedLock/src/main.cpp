@@ -76,17 +76,6 @@ void loop()
 
 	door_open_prev = door_open;
 
-	// unsigned long now = millis();
-	// if (now - lastMsg > 2000) 
-	// {
-	// 	lastMsg = now;
-	// 	++value;
-	// 	door_open_state ^= 0x01;
-	// 	snprintf (msg, 2, "%ld", door_open_state);
-	// 	Serial.print("Publish message: ");
-	// 	Serial.println(msg);
-	// 	client.publish("outTopic", msg);
-	// }
 }
 
 
@@ -149,6 +138,17 @@ void callback(char* topic, byte* payload, unsigned int length)
 
 	if(strcmp(TOPIC_DOOR_OPEN, topic) == 0)
 	{
+		if ((char)payload[0] == '1') 
+		{
+			digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+			// but actually the LED is on; this is because
+			// it is active low on the ESP-01)
+		} 
+		else 
+		{
+			digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+		}
+
 		// if((char)payload[0] == '1')
 		// {
 		// 	lock_open();
@@ -158,19 +158,6 @@ void callback(char* topic, byte* payload, unsigned int length)
 		// 	lock_close();
 		// }
 	}
-
-	// Switch on the LED if an 1 was received as first character
-	if ((char)payload[0] == '1') 
-	{
-		digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
-		// but actually the LED is on; this is because
-		// it is active low on the ESP-01)
-	} 
-	else 
-	{
-		digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
-	}
-
 }
 
 void reconnect() 
