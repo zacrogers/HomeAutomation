@@ -16,13 +16,13 @@
 // Servo defines
 #define MAX_ANGLE 180
 #define MIN_ANGLE 20
-#define SERVO_DELAY_TIME 10
+#define SERVO_DELAY_TIME 3
 #define SERVO_PIN D7
 
 #define RED_LED_PIN 0
 #define GREEN_LED_PIN 0
 
-#define BUZZER_PIN 0
+#define BUZZER_PIN D5
 
 #define DOOR_OPEN_PIN  D1
 

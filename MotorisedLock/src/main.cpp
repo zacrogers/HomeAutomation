@@ -34,6 +34,8 @@ void setup()
 	client.subscribe(TOPIC_DOOR_OPEN);
 
 	lock_open();
+
+	access_granted_feedback();
 }
 
 void loop() 
@@ -68,10 +70,14 @@ void loop()
 		Serial.print("Publish message: ");
 		Serial.println(msg);
 		client.publish(TOPIC_DOOR_OPEN, msg);
-		// if(door_open)
-		// {
-		// 	lock_open();
-		// }
+		if(door_open)
+		{
+			digitalWrite(BUILTIN_LED, HIGH); 
+		}
+		else
+		{
+			digitalWrite(BUILTIN_LED, LOW); 
+		}
 	}
 
 	door_open_prev = door_open;
@@ -111,7 +117,7 @@ void callback(char* topic, byte* payload, unsigned int length)
 	Serial.print(topic);
 	Serial.print("] ");
 
-	for (int i = 0; i < length; i++) 
+	for (int i = 0U; i < length; i++) 
 	{
 		Serial.print((char)payload[i]);
 	}
@@ -207,10 +213,10 @@ void lock_open(void)
 
 		door_locked = false;
 	}
-	else
-	{
-		servo.write(MIN_ANGLE);
-	}
+	// else
+	// {
+	// 	servo.write(MIN_ANGLE);
+	// }
 }
 
 void lock_close(void)
@@ -227,7 +233,43 @@ void lock_close(void)
 	}
 }
 
+void access_granted_feedback(void)
+{
+	analogWrite(BUZZER_PIN, 512);
+	analogWriteFreq(220);
+	delay(120);
 
+	analogWrite(BUZZER_PIN, 0);
+	analogWrite(BUZZER_PIN, 512);
+	analogWriteFreq(440);
+	delay(120);
+
+	analogWrite(BUZZER_PIN, 0);
+	analogWrite(BUZZER_PIN, 512);
+	analogWriteFreq(330);
+	delay(120);
+	analogWrite(BUZZER_PIN, 0);
+}
+
+void access_denied_feedback(void)
+{
+	analogWrite(BUZZER_PIN, 512);
+	analogWriteFreq(220);
+	delay(120);
+
+	analogWrite(BUZZER_PIN, 0);
+	analogWrite(BUZZER_PIN, 512);
+	analogWriteFreq(880);
+	delay(120);
+
+	analogWrite(BUZZER_PIN, 0);
+
+	// analogWrite(BUZZER_PIN, 0);
+	// analogWrite(BUZZER_PIN, 512);
+	// analogWriteFreq(220);
+	// delay(120);
+	// analogWrite(BUZZER_PIN, 0);
+}
 
 // #include "main.h"
 
